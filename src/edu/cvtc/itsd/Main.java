@@ -230,6 +230,7 @@ public class Main {
     frame.setMinimumSize(new Dimension(320, 240));
     frame.setPreferredSize(new Dimension(640, 480));
     frame.setMaximumSize(new Dimension(640, 480));
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     // Collect each "card" panel in a deck.
     deck = new JPanel(new CardLayout());
