@@ -70,3 +70,12 @@ Use `./build.sh` to build CiCo and `./run.sh` to run it if using the command lin
 
 ## Expected results
 * The field should only display 8 numbers
+
+# Module 5: Full program closure on close
+
+## Test steps
+1. Build and run CiCo
+2. Click the close button on the window.
+
+## Expected results
+* The program should close normally and if you opened the program from the command line it should say "Clean shutdown" in the command line.
