@@ -1,29 +1,118 @@
-*Clone git repository
-*Create branch "module4"
+## In repository branch module5:
 
-## Test steps for Happy Path for origin
+## Test steps for Happy Path for 00000000
 1. Run CiCo
+
+  ## Expected results
+    * Should open up separate window with application. 
+    * "Scan card" displayed on screen. 
+    * Input area allows for input.
+    * "Update" button present
+    * When pressed, Update button should work. 
+
+  ## Actual results
+    * All visual elements present
+    * All input/button elements functioning properly
+
 2. Enter 00000000 into the field and click Update.
 
-## Expected results
-* Should allow input. 
+  ## Expected results
+    * Should allow input and generate "Developer Checked IN".
+    * Log in screen should change visuals
+    * New button "Done" should appear labeled on screen.
 
-## Test steps for non-numerical input for origin
+  ## Actual results
+    * All elements functioning properly
+    * All visual elements present
+
+3. Test "Done" button
+
+  ## Expected results
+    * When "Done" button clicked, timeout period should be cut
+      short and reset to default check in screen. 
+
+  ## Actual results
+    * Button element works on resetting log screen to reset default.
+
+*** BUG FOUND ***
+Input area not cleared and previous user log in remains visually
+present in the input field. An inconsistency occurs, as after a given time, the reset will begin working again. 
+
+  ** Fix Suggestion ** 
+  Force a text field refresh on every iteration.
+
+    * In doneProcessing(), under fieldNumber.setText("");
+     
+     fieldNumber.setDocument(new PlainDocument());
+
+     ((AbstractDocument)   
+     fieldNumber.getDocument()).setDocumentFilter(new InputFilter());
+
+4. Test timed reset test
+
+  ## Expected results
+    * Timed reset should revert back to default swipe screen 
+
+  ## Actual results
+    * All visual elements present
+    * All elements functioning properly    
+_________________________________________________________
+
+## Test steps for 99999999
+1. Run CiCo 
+2. Enter 999999999
+
+  ## Expected results
+    * Input area allows for input.
+    * "Update" button present
+    * When pressed, Update button should work. 
+    * User should be met with an error screen with message
+    "Please show your card to staff to validate." 
+
+  ## Actual results
+    * All visual elements present
+    * All input/button elements functioning properly
+
+3. Error screen "OK" button test
+
+  ## Expected results
+    * When pressed, OK button should return to default log in 
+
+  ## Actual results
+    * All visual elements present
+    * All input/button elements functioning properly
+
+4. Error screen timed reset test
+
+  ## Expected results
+    * Reset should automatically return to default log in 
+      after a brief waiting period
+
+  ## Actual results
+    * All visual elements present
+    * All input/button elements functioning properly
+
+_________________________________________________________
+
+## Test steps for non-numerical input
 1. Enter abcd into the field and click Update
 
-## Expected results
-* Should NOT allow inputs
+  ## Expected results
+    * Should NOT allow inputs
+    * Beep is triggered
 
-## Test steps for Happy Path for updated version
-1. Run CiCo with changes
-2.) Enter 00000000
+  ## Actual results
+    * Inputs NOT allowed
+    * Beep is triggered
+_________________________________________________________
 
-## Expected results
-* Should allow input. 
+## Test steps for character limit on input
+1. Enter 123456789 into the field
 
-## Test steps for non-numerical input for updated
-1. Enter abcd into the field and click Update
+  ## Expected results
+    * Only 12345678 should show
+    * Beep is triggered
 
-## Expected results
-* Should NOT allow inputs
-
+  ## Actual results
+    * Only 12345678 should show
+    * Beep is triggered
