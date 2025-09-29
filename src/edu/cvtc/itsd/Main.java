@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
+import java.awt.Toolkit;
 import java.util.TimerTask;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -42,7 +43,7 @@ public class Main {
       throws BadLocationException {
 
         //Only allow digits on REGEX matching
-        if (fb.getDocument() != null && stringToAdd != null && stringToAdd.matches("\\d+")) { // 🔵 Only allow digits
+        if (fb.getDocument() != null && stringToAdd != null && stringToAdd.matches("\\d+")) {
           if (fb.getDocument().getLength() + stringToAdd.length() <= MAX_LENGTH) {
             super.insertString(fb, offset, stringToAdd, attr);
           } else {
@@ -56,15 +57,15 @@ public class Main {
     @Override
     public void replace(FilterBypass fb, int offset, int lengthToDelete, String stringToAdd, AttributeSet attr)
       throws BadLocationException{
-        if (fb.getDocument() != null && stringToAdd != null && stringToAdd.matches("\\d+")) { // 🔵 Only allow digits
+        if (fb.getDocument() != null && stringToAdd != null && stringToAdd.matches("\\d+")) {
           int newLength = fb.getDocument().getLength() - lengthToDelete + stringToAdd.length();
           if (newLength <= MAX_LENGTH) {
-            super.replace(fb, offset, lengthToDelete, stringToAdd, attr); // 🔵 Valid replacement
+            super.replace(fb, offset, lengthToDelete, stringToAdd, attr);
           } else {
-            Toolkit.getDefaultToolkit().beep(); // 🔵 Too long
+            Toolkit.getDefaultToolkit().beep();
           }
         } else {
-          Toolkit.getDefaultToolkit().beep(); // 🔵 Invalid input
+          Toolkit.getDefaultToolkit().beep();
         }
       }
     }
@@ -298,6 +299,8 @@ public class Main {
 
     panelStatus.add(Box.createVerticalGlue());
 
+    
+
     // Error panel ////////////////////////////////////////////////////////////
     JPanel panelError = new JPanel();
     panelError.setLayout(new BoxLayout(panelError, BoxLayout.PAGE_AXIS));
@@ -348,7 +351,7 @@ public class Main {
       command.executeUpdate("CREATE TABLE IF NOT EXISTS members (id INTEGER PRIMARY KEY, name TEXT NOT NULL, card TEXT NOT NULL, is_checked_in INTEGER)");
       command.executeUpdate("CREATE TABLE IF NOT EXISTS log (members_id INTEGER, is_checked_in INTEGER, at TEXT NOT NULL)");
 
-      // 99999999 is guaranteed invalid.
+      // Module 2: Sample test for invalid card numbers.
       command.executeUpdate("DELETE FROM members WHERE card = '99999999'");
 
       // 00000000 is guaranteed valid; create if needed.
