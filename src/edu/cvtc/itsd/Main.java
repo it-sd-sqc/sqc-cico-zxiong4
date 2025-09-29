@@ -40,35 +40,35 @@ public class Main {
 
     @Override
     public void insertString(FilterBypass fb, int offset, String stringToAdd, AttributeSet attr)
-      throws BadLocationException {
+            throws BadLocationException {
 
-        //Only allow digits on REGEX matching
-        if (fb.getDocument() != null && stringToAdd != null && stringToAdd.matches("\\d+")) {
-          if (fb.getDocument().getLength() + stringToAdd.length() <= MAX_LENGTH) {
-            super.insertString(fb, offset, stringToAdd, attr);
-          } else {
-            Toolkit.getDefaultToolkit().beep();
-          }
+      //Only allow digits on REGEX matching
+      if (fb.getDocument() != null && stringToAdd != null && stringToAdd.matches("\\d+")) {
+        if (fb.getDocument().getLength() + stringToAdd.length() <= MAX_LENGTH) {
+          super.insertString(fb, offset, stringToAdd, attr);
         } else {
           Toolkit.getDefaultToolkit().beep();
         }
+      } else {
+        Toolkit.getDefaultToolkit().beep();
       }
+    }
 
     @Override
     public void replace(FilterBypass fb, int offset, int lengthToDelete, String stringToAdd, AttributeSet attr)
-      throws BadLocationException{
-        if (fb.getDocument() != null && stringToAdd != null && stringToAdd.matches("\\d+")) {
-          int newLength = fb.getDocument().getLength() - lengthToDelete + stringToAdd.length();
-          if (newLength <= MAX_LENGTH) {
-            super.replace(fb, offset, lengthToDelete, stringToAdd, attr);
-          } else {
-            Toolkit.getDefaultToolkit().beep();
-          }
+            throws BadLocationException{
+      if (fb.getDocument() != null && stringToAdd != null && stringToAdd.matches("\\d+")) {
+        int newLength = fb.getDocument().getLength() - lengthToDelete + stringToAdd.length();
+        if (newLength <= MAX_LENGTH) {
+          super.replace(fb, offset, lengthToDelete, stringToAdd, attr);
         } else {
           Toolkit.getDefaultToolkit().beep();
         }
+      } else {
+        Toolkit.getDefaultToolkit().beep();
       }
     }
+  }
 
   // Lookup the card information after button press ///////////////////////////
   public static class Update implements ActionListener {
@@ -183,11 +183,11 @@ public class Main {
   private static void showError(int code) {
     // Module 2 ticket: Show human-readable error messages.
     String[] explanations = {
-        "Please inform staff an unknown error occurred.",
-        "Please inform staff that database wasn't found.",
-        "Please show your card to staff to validate.",
-        "Please inform staff that status updates failed.",
-        "Please inform staff that log updates failed."
+            "Please inform staff an unknown error occurred.",
+            "Please inform staff that database wasn't found.",
+            "Please show your card to staff to validate.",
+            "Please inform staff that status updates failed.",
+            "Please inform staff that log updates failed."
     };
 
     labelReason.setText(explanations[code]);
@@ -299,7 +299,20 @@ public class Main {
 
     panelStatus.add(Box.createVerticalGlue());
 
-    
+    // Module 5: Ticket 501: Add button so users can skip timeout
+    // Using JButton, create a new button labeled "Done"
+    JButton buttonDone = new JButton("Done");
+    // Add a listener for handling the click
+    // New Handler calls the doneProcessing() function
+    // Which reverts the application to a refreshed default
+    buttonDone.addActionListener(new Handler());
+    // Button orientation
+    buttonDone.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+    buttonDone.setForeground(Color.white);
+    // Adds button to the status panel
+    panelStatus.add(buttonDone);
+    // Fill vertical spacing for better look
+    panelStatus.add(Box.createVerticalGlue());
 
     // Error panel ////////////////////////////////////////////////////////////
     JPanel panelError = new JPanel();
