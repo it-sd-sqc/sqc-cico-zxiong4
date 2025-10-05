@@ -61,4 +61,12 @@ Use `./build.sh` to build CiCo and `./run.sh` to run it if using the command lin
 ## Expected results
 * Should display "Developer" for the user name.
 
+# Module 6:
+
+## Test for auto submit on card enter
+1. Enter 00000000 into text field
+
+  ## Expected results
+    * Should automatically continue to status screen
+
 
