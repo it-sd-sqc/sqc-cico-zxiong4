@@ -39,10 +39,16 @@ public class Main {
 
     @Override
     public void insertString(FilterBypass fb, int offset, String stringToAdd, AttributeSet attr)
-        throws BadLocationException
+            throws BadLocationException
     {
-      if (fb.getDocument() != null) {
-        super.insertString(fb, offset, stringToAdd, attr);
+      if (fb.getDocument() != null && stringToAdd.matches("[0-9]")) {
+        int newLength = fb.getDocument().getLength() + stringToAdd.length();
+        if (newLength <= MAX_LENGTH) {
+          super.insertString(fb, offset, stringToAdd, attr);
+          if (newLength == MAX_LENGTH) {
+            SwingUtilities.invokeLater(Main::processCard);
+          }
+        }
       }
       else {
         Toolkit.getDefaultToolkit().beep();
@@ -51,10 +57,16 @@ public class Main {
 
     @Override
     public void replace(FilterBypass fb, int offset, int lengthToDelete, String stringToAdd, AttributeSet attr)
-        throws BadLocationException
+            throws BadLocationException
     {
-      if (fb.getDocument() != null) {
-        super.replace(fb, offset, lengthToDelete, stringToAdd, attr);
+      if (fb.getDocument() != null && (stringToAdd.isEmpty() || stringToAdd.matches("[0-9]"))) {
+        int newLength = fb.getDocument().getLength() - lengthToDelete + stringToAdd.length();
+        if (newLength <= MAX_LENGTH) {
+          super.replace(fb, offset, lengthToDelete, stringToAdd, attr);
+          if (newLength == MAX_LENGTH) {
+            SwingUtilities.invokeLater(Main::processCard);
+          }
+        }
       }
       else {
         Toolkit.getDefaultToolkit().beep();
@@ -260,11 +272,11 @@ public class Main {
     fieldNumber.setForeground(Color.magenta);
     panelMain.add(fieldNumber);
 
-    JButton updateButton = new JButton("Update");
-    updateButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-    updateButton.addActionListener(new Update());
-    updateButton.setForeground(Color.green);
-    panelMain.add(updateButton);
+//    JButton updateButton = new JButton("Update");
+//    updateButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+//    updateButton.addActionListener(new Update());
+//    updateButton.setForeground(Color.green);
+//    panelMain.add(updateButton);
 
     panelMain.add(Box.createVerticalGlue());
 
