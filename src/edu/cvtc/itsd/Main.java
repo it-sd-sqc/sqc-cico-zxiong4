@@ -40,10 +40,9 @@ public class Main {
 
     @Override
     public void insertString(FilterBypass fb, int offset, String stringToAdd, AttributeSet attr)
-            throws BadLocationException {
+        throws BadLocationException {
 
-      //Only allow digits on REGEX matching
-      if (fb.getDocument() != null && stringToAdd != null && stringToAdd.matches("\\d+")) {
+      if (fb.getDocument() != null && stringToAdd != null && stringToAdd.matches("\\d*")) {
         if (fb.getDocument().getLength() + stringToAdd.length() <= MAX_LENGTH) {
           super.insertString(fb, offset, stringToAdd, attr);
         } else {
@@ -56,8 +55,8 @@ public class Main {
 
     @Override
     public void replace(FilterBypass fb, int offset, int lengthToDelete, String stringToAdd, AttributeSet attr)
-            throws BadLocationException{
-      if (fb.getDocument() != null && stringToAdd != null && stringToAdd.matches("\\d+")) {
+            throws BadLocationException {
+      if (fb.getDocument() != null && stringToAdd != null && stringToAdd.matches("\\d*")) {
         int newLength = fb.getDocument().getLength() - lengthToDelete + stringToAdd.length();
         if (newLength <= MAX_LENGTH) {
           super.replace(fb, offset, lengthToDelete, stringToAdd, attr);
