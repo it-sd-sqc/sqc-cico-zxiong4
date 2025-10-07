@@ -55,10 +55,14 @@ public class Main {
     {
       if (fb.getDocument() != null && fb.getDocument().getLength() + stringToAdd.length() <= MAX_LENGTH) {
         super.replace(fb, offset, lengthToDelete, stringToAdd, attr);
+          // automatically processes card when max length is reached
+          if (fb.getDocument() != null && fb.getDocument().getLength() == MAX_LENGTH) {
+              Main.processCard();
+         }
       }
       else {
         Toolkit.getDefaultToolkit().beep();
-      }
+    }
     }
   }
 
@@ -260,12 +264,6 @@ public class Main {
     fieldNumber.setBackground(Color.green);
     fieldNumber.setForeground(Color.magenta);
     panelMain.add(fieldNumber);
-
-    JButton updateButton = new JButton("Update");
-    updateButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-    updateButton.addActionListener(new Update());
-    updateButton.setForeground(Color.green);
-    panelMain.add(updateButton);
 
     panelMain.add(Box.createVerticalGlue());
 
