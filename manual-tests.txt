@@ -79,3 +79,12 @@ Use `./build.sh` to build CiCo and `./run.sh` to run it if using the command lin
 
 ## Expected results
 * The program should close normally and if you opened the program from the command line it should say "Clean shutdown" in the command line.
+
+# Module 6: Automatically submit 8 digits (Ticket 601)
+
+## Test steps
+1. Build and run CiCo
+2. Enter eight 0's (00000000)
+
+## Expected results
+* The program should automatically submit digits and move on to the status screen.
